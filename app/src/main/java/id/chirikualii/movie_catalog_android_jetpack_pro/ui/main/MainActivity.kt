@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity(), Observer<MainViewModel.MainState> {
         mViewModel.state.observe(this,this)
         mViewModel.doGetDiscoverMovie()
 
+        //tab layout 2
     }
 
     override fun onChanged(state: MainViewModel.MainState?) {
