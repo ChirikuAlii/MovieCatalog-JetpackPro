@@ -10,6 +10,7 @@ import id.chirikualii.movie_catalog_android_jetpack_pro.data.remote.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -46,6 +47,16 @@ object NetworkModule {
             .writeTimeout(timeOut, TimeUnit.SECONDS)
             .addInterceptor(httpLoggingInterceptor)
             //.addInterceptor(interceptor)
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(gson: Gson,okHttpClient: OkHttpClient) :Retrofit{
+        return Retrofit.Builder()
+            .baseUrl("https://api.themoviedb.org/3/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(okHttpClient)
             .build()
     }
 
