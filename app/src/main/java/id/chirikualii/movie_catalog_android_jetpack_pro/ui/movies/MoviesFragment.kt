@@ -5,23 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import id.chirikualii.movie_catalog_android_jetpack_pro.R
+import id.chirikualii.movie_catalog_android_jetpack_pro.databinding.FragmentMoviesBinding
+import id.chirikualii.movie_catalog_android_jetpack_pro.ui.main.MainViewModel
+import id.chirikualii.movie_catalog_android_jetpack_pro.utils.toast
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@AndroidEntryPoint
+class MoviesFragment : Fragment() , Observer<MoviesViewModel.MoviesState> {
 
-
-class MoviesFragment : Fragment() {
-
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private lateinit var binding : FragmentMoviesBinding
+    private val mViewModel : MoviesViewModel by lazy {
+        ViewModelProvider(this).get(MoviesViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -29,17 +26,32 @@ class MoviesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movies, container, false)
+        binding = FragmentMoviesBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MoviesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mViewModel.state.observe(viewLifecycleOwner,this)
+        mViewModel.doGetDiscoverMovie()
+    }
+
+    override fun onChanged(state: MoviesViewModel.MoviesState?) {
+
+        when(state){
+
+            is MoviesViewModel.MoviesState.Success -> {
+
+                requireContext().toast("sukses")
             }
+
+            is MoviesViewModel.MoviesState.Failed -> {
+                requireContext().toast("gagal")
+            }
+
+            is MoviesViewModel.MoviesState.Loading -> {
+                //loading
+            }
+        }
     }
 }
