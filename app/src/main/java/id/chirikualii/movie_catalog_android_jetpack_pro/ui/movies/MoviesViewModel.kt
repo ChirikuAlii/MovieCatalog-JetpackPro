@@ -5,10 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.chirikualii.movie_catalog_android_jetpack_pro.abstraction.BaseViewModel
-import id.chirikualii.movie_catalog_android_jetpack_pro.data.remote.response.DiscoverMovieResponse
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.MovieRepo
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
-import id.chirikualii.movie_catalog_android_jetpack_pro.ui.main.MainViewModel
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
