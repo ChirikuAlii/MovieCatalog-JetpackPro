@@ -7,16 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.chirikualii.movie_catalog_android_jetpack_pro.R
 import id.chirikualii.movie_catalog_android_jetpack_pro.databinding.FragmentTvShowsBinding
 import id.chirikualii.movie_catalog_android_jetpack_pro.ui.movies.MoviesViewModel
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.toast
+import id.chirikualii.movie_catalog_android_jetpack_pro.utils.view.MarginItemDecoration
+import id.chirikualii.movie_catalog_android_jetpack_pro.utils.view.OnItemClicked
 
 @AndroidEntryPoint
-class TvShowsFragment : Fragment() ,Observer<TvShowsViewModel.TvShowsState>{
+class TvShowsFragment : Fragment() ,Observer<TvShowsViewModel.TvShowsState>, OnItemClicked{
 
     private lateinit var binding : FragmentTvShowsBinding
+    private lateinit var adapterList: TvShowsListAdapter
 
     private val mViewModel :TvShowsViewModel by lazy {
         ViewModelProvider(this).get(TvShowsViewModel::class.java)
@@ -36,6 +40,21 @@ class TvShowsFragment : Fragment() ,Observer<TvShowsViewModel.TvShowsState>{
 
         mViewModel.state.observe(viewLifecycleOwner,this)
         mViewModel.doGetDiscoverTvShow()
+
+        adapterList = TvShowsListAdapter(this)
+
+        setupView()
+    }
+
+    private fun setupView() {
+
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(MarginItemDecoration(16))
+            adapter = adapterList
+
+        }
+
     }
 
     override fun onChanged(state: TvShowsViewModel.TvShowsState?) {
@@ -43,12 +62,12 @@ class TvShowsFragment : Fragment() ,Observer<TvShowsViewModel.TvShowsState>{
         when(state){
 
             is TvShowsViewModel.TvShowsState.Success -> {
+                adapterList.addList(state.data)
 
-                requireContext().toast("sukses tv show")
             }
 
             is TvShowsViewModel.TvShowsState.Failed -> {
-                requireContext().toast("gagal tv show")
+
             }
 
             is TvShowsViewModel.TvShowsState.Loading -> {
