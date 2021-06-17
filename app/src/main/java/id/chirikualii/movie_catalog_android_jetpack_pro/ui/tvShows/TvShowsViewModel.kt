@@ -9,6 +9,7 @@ import id.chirikualii.movie_catalog_android_jetpack_pro.data.remote.response.Dis
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.remote.response.DiscoverTvShowsResponse
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.MovieRepo
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.TvShowRepo
+import id.chirikualii.movie_catalog_android_jetpack_pro.model.TvShow
 import id.chirikualii.movie_catalog_android_jetpack_pro.ui.movies.MoviesViewModel
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -25,7 +26,7 @@ class TvShowsViewModel @Inject constructor(
 ): BaseViewModel<TvShowsViewModel.TvShowsState>(){
 
     sealed class TvShowsState {
-        data class Success(val data: List<DiscoverTvShowsResponse.TvShowsResponse>): TvShowsState()
+        data class Success(val data: ArrayList<TvShow>): TvShowsState()
         data class Failed(val error: String
         ): TvShowsState()
         object Loading: TvShowsState()
@@ -36,8 +37,9 @@ class TvShowsViewModel @Inject constructor(
         try {
             viewModelScope.launch {
                 val result = repo.getDiscoverTvShows()
+                val arrayList = ArrayList<TvShow>(result)
                 Log.d(TAG, "doGetDiscoverTvShows: ${Gson().toJsonTree(result)}")
-                _state.value = TvShowsState.Success(result.results)
+                _state.value = TvShowsState.Success(arrayList)
             }
         }catch (e: Exception){
             Log.e(TAG, "doGetDiscoverTvShows error: ${e.message}", )

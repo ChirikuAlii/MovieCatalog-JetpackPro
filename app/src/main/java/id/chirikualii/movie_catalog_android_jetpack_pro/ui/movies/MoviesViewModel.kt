@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.chirikualii.movie_catalog_android_jetpack_pro.abstraction.BaseViewModel
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.remote.response.DiscoverMovieResponse
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.MovieRepo
+import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
 import id.chirikualii.movie_catalog_android_jetpack_pro.ui.main.MainViewModel
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -22,7 +23,7 @@ class MoviesViewModel @Inject constructor(
 ): BaseViewModel<MoviesViewModel.MoviesState>(){
 
     sealed class MoviesState {
-        data class Success(val data: List<DiscoverMovieResponse.MovieResponse>): MoviesState()
+        data class Success(val data: ArrayList<Movie>): MoviesState()
         data class Failed(val error: String
         ): MoviesState()
         object Loading: MoviesState()
@@ -33,8 +34,9 @@ class MoviesViewModel @Inject constructor(
         try {
             viewModelScope.launch {
                 val result = repo.getDiscoverMovie()
+                val arraylist = ArrayList<Movie>(result)
                 Log.d(TAG, "doGetDiscoverMovie: ${Gson().toJsonTree(result)}")
-                _state.value = MoviesState.Success(result.movieResponses)
+                _state.value = MoviesState.Success(arraylist)
             }
         }catch (e: Exception){
             Log.e(TAG, "doGetDiscoverMovie error: ${e.message}", )

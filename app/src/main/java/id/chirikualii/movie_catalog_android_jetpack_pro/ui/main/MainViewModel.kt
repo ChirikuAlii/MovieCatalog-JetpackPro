@@ -26,18 +26,4 @@ class MainViewModel @Inject constructor(
         object Loading: MainState()
     }
 
-    fun doGetDiscoverMovie(){
-        _state.value = MainState.Loading
-        try {
-            viewModelScope.launch {
-                val result = repo.getDiscoverMovie()
-                Log.d(TAG, "doGetDiscoverMovie: ${Gson().toJsonTree(result)}")
-                _state.value = MainState.Success(result.movieResponses)
-            }
-        }catch (e:Exception){
-            Log.e(TAG, "doGetDiscoverMovie error: ${e.message}", )
-            _state.value = MainState.Failed(e.message.toString())
-        }
-
-    }
 }
