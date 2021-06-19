@@ -49,8 +49,8 @@ class MoviesListAdapter(val onItemClicked : OnItemClicked):RecyclerView.Adapter<
             binding.tvTitleFilm.text = data.title
 
             itemView.setOnClickListener {
-                val intent = Intent(itemView.context,DetailMoviesActivity::class.java)
-                itemView.context.startActivity(intent)
+                onItemClicked.onMovieClicked(data)
+
             }
         }
     }

@@ -38,8 +38,7 @@ class TvShowsListAdapter(val onItemClicked : OnItemClicked): RecyclerView.Adapte
             binding.tvTitleFilm.text = data.title
 
             itemView.setOnClickListener {
-                val intent = Intent(itemView.context, DetailMoviesActivity::class.java)
-                itemView.context.startActivity(intent)
+               onItemClicked.onTvShowClicked(data)
             }
         }
     }

@@ -1,5 +1,6 @@
 package id.chirikualii.movie_catalog_android_jetpack_pro.ui.movies
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.chirikualii.movie_catalog_android_jetpack_pro.databinding.FragmentMoviesBinding
+import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
+import id.chirikualii.movie_catalog_android_jetpack_pro.ui.detailMovies.DetailMoviesActivity
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.view.OnItemClicked
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.view.MarginItemDecoration
 
@@ -72,5 +75,12 @@ class MoviesFragment : Fragment() , Observer<MoviesViewModel.MoviesState>, OnIte
                 //loading
             }
         }
+    }
+
+    override fun onMovieClicked(data: Movie) {
+        super.onMovieClicked(data)
+        val intent = Intent(requireContext(), DetailMoviesActivity::class.java)
+        intent.putExtra("MOVIE_ID",data.id)
+        requireContext().startActivity(intent)
     }
 }

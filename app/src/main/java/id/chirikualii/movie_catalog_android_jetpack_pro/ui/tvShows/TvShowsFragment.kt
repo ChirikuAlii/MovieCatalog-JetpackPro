@@ -1,5 +1,6 @@
 package id.chirikualii.movie_catalog_android_jetpack_pro.ui.tvShows
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.chirikualii.movie_catalog_android_jetpack_pro.R
 import id.chirikualii.movie_catalog_android_jetpack_pro.databinding.FragmentTvShowsBinding
+import id.chirikualii.movie_catalog_android_jetpack_pro.model.TvShow
+import id.chirikualii.movie_catalog_android_jetpack_pro.ui.detailMovies.DetailMoviesActivity
+import id.chirikualii.movie_catalog_android_jetpack_pro.ui.detailTvShows.DetailTvShowsActivity
 import id.chirikualii.movie_catalog_android_jetpack_pro.ui.movies.MoviesViewModel
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.toast
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.view.MarginItemDecoration
@@ -74,6 +78,13 @@ class TvShowsFragment : Fragment() ,Observer<TvShowsViewModel.TvShowsState>, OnI
                 //loading
             }
         }
+    }
+
+    override fun onTvShowClicked(data: TvShow) {
+        super.onTvShowClicked(data)
+        val intent = Intent(requireContext(), DetailTvShowsActivity::class.java)
+        intent.putExtra("TVSHOW_ID",data.id)
+        requireContext().startActivity(intent)
     }
 
 }
