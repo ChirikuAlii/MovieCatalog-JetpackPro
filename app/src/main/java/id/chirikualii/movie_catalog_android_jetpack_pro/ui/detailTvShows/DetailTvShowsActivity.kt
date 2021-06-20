@@ -26,18 +26,18 @@ class DetailTvShowsActivity : AppCompatActivity() {
         mViewModel.setSelectedTvShow(tvShowId)
         val data = mViewModel.doLoadDetailTvShow()
 
-        binding.tvTitle.text = data.title
-        binding.tvDesc.text = data.overview
-        binding.tvDate.text = data.releaseDate
+        binding.tvTitleTv.text = data.title
+        binding.tvDescTv.text = data.overview
+        binding.tvDateTv.text = data.releaseDate
 
         Glide.with(this)
             .load("https://image.tmdb.org/t/p/w500${data.poster}")
             .transform(RoundedCorners(8))
-            .into(binding.ivPoster)
+            .into(binding.ivPosterTv)
 
         Glide.with(this)
             .load("https://image.tmdb.org/t/p/w500${data.backdrop}")
-            .into(binding.ivBackdrop)
+            .into(binding.ivBackdropTv)
     }
 
 }

@@ -1,25 +1,18 @@
 package id.chirikualii.movie_catalog_android_jetpack_pro.ui.splash
 
 
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.pressBack
-import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import id.chirikualii.movie_catalog_android_jetpack_pro.R
-import org.hamcrest.Description
-import org.hamcrest.Matcher
-import org.hamcrest.Matchers.`is`
-import org.hamcrest.Matchers.allOf
-import org.hamcrest.TypeSafeMatcher
-import org.hamcrest.core.IsInstanceOf
+import id.chirikualii.movie_catalog_android_jetpack_pro.ui.movies.MoviesListAdapter
+import id.chirikualii.movie_catalog_android_jetpack_pro.utils.DataDummy
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,105 +21,84 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class SplashActivityTest {
 
+    private val dummyMovie = DataDummy.getMovieList()
+    private val dummyTvShow = DataDummy.getTvShows()
+
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(SplashActivity::class.java)
 
     @Test
-    fun splashActivityTest() {
-        val recyclerView = onView(
-            allOf(
-                withId(R.id.recyclerView),
-                childAtPosition(
-                    withClassName(`is`("android.widget.FrameLayout")),
-                    0
-                )
-            )
-        )
-        recyclerView.perform(actionOnItemAtPosition<ViewHolder>(7, click()))
+    fun loadMovieandTvShow(){
 
-        val frameLayout = onView(
-            allOf(IsInstanceOf.instanceOf(android.widget.FrameLayout::class.java), isDisplayed())
-        )
-        frameLayout.check(matches(isDisplayed()))
 
-        val frameLayout2 = onView(
-            allOf(IsInstanceOf.instanceOf(android.widget.FrameLayout::class.java), isDisplayed())
-        )
-        frameLayout2.check(matches(isDisplayed()))
+        onView(withId(R.id.recyclerViewMovie))
+            .check(matches(isDisplayed()))
 
-        pressBack()
+        onView(withId(R.id.recyclerViewMovie))
+            .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(9))
 
-        val recyclerView2 = onView(
-            allOf(
-                withParent(
-                    allOf(
-                        withId(R.id.viewPager),
-                        withParent(IsInstanceOf.instanceOf(android.view.ViewGroup::class.java))
-                    )
-                ),
-                isDisplayed()
-            )
-        )
-        recyclerView2.check(matches(isDisplayed()))
+        onView(withId(R.id.viewPager)).perform(swipeLeft())
 
-        val recyclerView3 = onView(
-            allOf(
-                withParent(
-                    allOf(
-                        withId(R.id.viewPager),
-                        withParent(IsInstanceOf.instanceOf(android.view.ViewGroup::class.java))
-                    )
-                ),
-                isDisplayed()
-            )
-        )
-        recyclerView3.check(matches(isDisplayed()))
+        onView(withId(R.id.recyclerViewTVShow))
+            .check(matches(isDisplayed()))
 
-        val recyclerView4 = onView(
-            allOf(
-                withId(R.id.recyclerView),
-                childAtPosition(
-                    withClassName(`is`("android.widget.FrameLayout")),
-                    0
-                )
-            )
-        )
-        recyclerView4.perform(actionOnItemAtPosition<ViewHolder>(0, click()))
+        onView(withId(R.id.recyclerViewTVShow))
+            .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(7))
 
-        val frameLayout3 = onView(
-            allOf(IsInstanceOf.instanceOf(android.widget.FrameLayout::class.java), isDisplayed())
-        )
-        frameLayout3.check(matches(isDisplayed()))
 
-        val frameLayout4 = onView(
-            allOf(IsInstanceOf.instanceOf(android.widget.FrameLayout::class.java), isDisplayed())
-        )
-        frameLayout4.check(matches(isDisplayed()))
+        onView(withId(R.id.viewPager)).perform(swipeRight())
 
-        val frameLayout5 = onView(
-            allOf(IsInstanceOf.instanceOf(android.widget.FrameLayout::class.java), isDisplayed())
-        )
-        frameLayout5.check(matches(isDisplayed()))
 
-        pressBack()
+
+
     }
 
-    private fun childAtPosition(
-        parentMatcher: Matcher<View>, position: Int
-    ): Matcher<View> {
+    @Test
+    fun detailMovie(){
+        onView(withId(R.id.recyclerViewMovie))
+            .check(matches(isDisplayed()))
 
-        return object : TypeSafeMatcher<View>() {
-            override fun describeTo(description: Description) {
-                description.appendText("Child at position $position in parent ")
-                parentMatcher.describeTo(description)
-            }
+        onView(withId(R.id.recyclerViewMovie))
+            .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(3))
 
-            public override fun matchesSafely(view: View): Boolean {
-                val parent = view.parent
-                return parent is ViewGroup && parentMatcher.matches(parent)
-                        && view == parent.getChildAt(position)
-            }
-        }
+        onView(withId(R.id.recyclerViewMovie))
+            .perform(RecyclerViewActions.actionOnItemAtPosition<MoviesListAdapter.MovieHolder>(3,click()))
+
+        onView(withId(R.id.tvTitle)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvDate)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvDesc)).check(matches(isDisplayed()))
+        onView(withId(R.id.ivBackdrop)).check(matches(isDisplayed()))
+        onView(withId(R.id.ivPoster)).check(matches(isDisplayed()))
+
+
+        onView(withId(R.id.tvTitle)).check(matches(withText(dummyMovie[3].title)))
+        onView(withId(R.id.tvDate)).check(matches(withText(dummyMovie[3].releaseDate)))
+        onView(withId(R.id.tvDesc)).check(matches(withText(dummyMovie[3].overview)))
+    }
+
+    @Test
+    fun detailTvShow(){
+        onView(withId(R.id.viewPager)).perform(swipeLeft())
+
+        onView(withId(R.id.recyclerViewTVShow))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.recyclerViewTVShow))
+            .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(2))
+
+        onView(withId(R.id.recyclerViewTVShow))
+            .perform(RecyclerViewActions.actionOnItemAtPosition<MoviesListAdapter.MovieHolder>(2,click()))
+
+        onView(withId(R.id.tvTitleTv)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvDateTv)).check(matches(isDisplayed()))
+        onView(withId(R.id.tvDescTv)).check(matches(isDisplayed()))
+        onView(withId(R.id.ivBackdropTv)).check(matches(isDisplayed()))
+        onView(withId(R.id.ivPosterTv)).check(matches(isDisplayed()))
+
+
+        onView(withId(R.id.tvTitleTv)).check(matches(withText(dummyTvShow[2].title)))
+        onView(withId(R.id.tvDateTv)).check(matches(withText(dummyTvShow[2].releaseDate)))
+        onView(withId(R.id.tvDescTv)).check(matches(withText(dummyTvShow[2].overview)))
     }
 }

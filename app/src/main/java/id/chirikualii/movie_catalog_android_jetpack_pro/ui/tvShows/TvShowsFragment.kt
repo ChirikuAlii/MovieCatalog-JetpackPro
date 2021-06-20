@@ -44,7 +44,7 @@ class TvShowsFragment : Fragment(), OnItemClicked {
 
     private fun setupView() {
 
-        binding.recyclerView.apply {
+        binding.recyclerViewTVShow.apply {
             layoutManager = LinearLayoutManager(requireContext())
             addItemDecoration(MarginItemDecoration(16))
             adapter = adapterList

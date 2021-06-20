@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/tvDesc"
+        android:id="@+id/tvDescTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -18,12 +18,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/ivPoster"
-        app:layout_constraintTop_toBottomOf="@+id/ivPoster"
+        app:layout_constraintStart_toStartOf="@+id/ivPosterTv"
+        app:layout_constraintTop_toBottomOf="@+id/ivPosterTv"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvTitleTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -36,29 +36,29 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tvDate"
+        app:layout_constraintBottom_toTopOf="@+id/tvDateTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ivPoster"
-        app:layout_constraintTop_toBottomOf="@+id/ivBackdrop"
+        app:layout_constraintStart_toEndOf="@+id/ivPosterTv"
+        app:layout_constraintTop_toBottomOf="@+id/ivBackdropTv"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/tvDate"
+        android:id="@+id/tvDateTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:text="Release date : 2021-01-03"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/tvDesc"
+        app:layout_constraintBottom_toTopOf="@+id/tvDescTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tvTitle"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        app:layout_constraintStart_toStartOf="@+id/tvTitleTv"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleTv" />
 
     <ImageView
-        android:id="@+id/ivBackdrop"
+        android:id="@+id/ivBackdropTv"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:scaleType="centerCrop"
@@ -67,7 +67,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/ivBackdropBackground"
+        android:id="@+id/ivBackdropTvBackground"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:alpha="0.4"
@@ -78,14 +78,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/ivPoster"
+        android:id="@+id/ivPosterTv"
         android:layout_width="150dp"
         android:layout_height="200dp"
         android:layout_marginStart="24dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/ivBackdrop"
+        app:layout_constraintBottom_toBottomOf="@+id/ivBackdropTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivBackdrop" />
+        app:layout_constraintTop_toBottomOf="@+id/ivBackdropTv" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -45,7 +45,7 @@ class MoviesFragment : Fragment(), OnItemClicked {
 
     private fun setupView() {
 
-        binding.recyclerView.apply {
+        binding.recyclerViewMovie.apply {
             layoutManager = LinearLayoutManager(requireContext())
             addItemDecoration(MarginItemDecoration(16))
             adapter = movieListAdapter

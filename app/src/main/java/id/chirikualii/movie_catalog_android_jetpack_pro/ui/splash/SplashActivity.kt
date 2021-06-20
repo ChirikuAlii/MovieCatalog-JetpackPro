@@ -16,11 +16,13 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this,MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        },2000)
+        val intent = Intent(this,MainActivity::class.java)
+        startActivity(intent)
+//            finish()
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            val intent = Intent(this,MainActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        },2000)
     }
 }
