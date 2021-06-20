@@ -8,9 +8,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
  * Create by Chiriku Alii on 6/15/21
  * github.com/chirikualii
  */
-class TabAdapter(private val list: List<Fragment>, fa : FragmentActivity) :FragmentStateAdapter(fa) {
+class TabAdapter(private val list: List<Fragment>, fa: FragmentActivity) :
+    FragmentStateAdapter(fa) {
 
-    override fun getItemCount() : Int = list.size
+    override fun getItemCount(): Int = list.size
 
     override fun createFragment(position: Int): Fragment = list[position]
 }

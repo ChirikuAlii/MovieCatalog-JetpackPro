@@ -8,7 +8,6 @@ import id.chirikualii.movie_catalog_android_jetpack_pro.abstraction.BaseViewMode
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.MovieRepo
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 /**
@@ -18,16 +17,18 @@ import javax.inject.Inject
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
     private val repo: MovieRepo
-): BaseViewModel<MoviesViewModel.MoviesState>(){
+) : BaseViewModel<MoviesViewModel.MoviesState>() {
 
     sealed class MoviesState {
-        data class Success(val data: ArrayList<Movie>): MoviesState()
-        data class Failed(val error: String
-        ): MoviesState()
-        object Loading: MoviesState()
+        data class Success(val data: ArrayList<Movie>) : MoviesState()
+        data class Failed(
+            val error: String
+        ) : MoviesState()
+
+        object Loading : MoviesState()
     }
 
-    fun doGetDiscoverMovie(){
+    fun doGetDiscoverMovie() {
         _state.value = MoviesState.Loading
         try {
             viewModelScope.launch {
@@ -36,8 +37,8 @@ class MoviesViewModel @Inject constructor(
                 Log.d(TAG, "doGetDiscoverMovie: ${Gson().toJsonTree(result)}")
                 _state.value = MoviesState.Success(arraylist)
             }
-        }catch (e: Exception){
-            Log.e(TAG, "doGetDiscoverMovie error: ${e.message}", )
+        } catch (e: Exception) {
+            Log.e(TAG, "doGetDiscoverMovie error: ${e.message}")
             _state.value = MoviesState.Failed(e.message.toString())
         }
 

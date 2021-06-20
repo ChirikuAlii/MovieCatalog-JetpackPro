@@ -9,7 +9,7 @@ import javax.inject.Inject
  * github.com/chirikualii
  */
 
-class Session @Inject constructor(context: Context, val gson : Gson){
+class Session @Inject constructor(context: Context, val gson: Gson) {
 
     private val sp = context.getSharedPreferences(SESSION_NAME, Context.MODE_PRIVATE)
     private val spe = sp.edit()
@@ -23,10 +23,10 @@ class Session @Inject constructor(context: Context, val gson : Gson){
         spe.clear().apply()
     }
 
-    var isLogin : Boolean
-        get() = sp.getBoolean(LOGIN_PREF,false)
+    var isLogin: Boolean
+        get() = sp.getBoolean(LOGIN_PREF, false)
         set(value) {
-            spe.putBoolean(LOGIN_PREF,value)
+            spe.putBoolean(LOGIN_PREF, value)
             spe.apply()
         }
 

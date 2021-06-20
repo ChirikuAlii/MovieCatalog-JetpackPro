@@ -16,8 +16,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideSession(@ApplicationContext context: Context, gson: Gson) : Session {
-        return Session(context,gson)
+    fun provideSession(@ApplicationContext context: Context, gson: Gson): Session {
+        return Session(context, gson)
     }
 
 }

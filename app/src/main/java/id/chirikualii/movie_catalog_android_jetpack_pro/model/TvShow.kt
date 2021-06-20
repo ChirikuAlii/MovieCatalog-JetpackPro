@@ -5,11 +5,11 @@ package id.chirikualii.movie_catalog_android_jetpack_pro.model
  * github.com/chirikualii
  */
 data class TvShow(
-    val id :String ="",
-    val title:String ="",
-    val overview:String ="",
-    val poster:String ="",
-    val backdrop:String ="",
-    val vote:String ="",
-    val releaseDate:String = ""
+    val id: String = "",
+    val title: String = "",
+    val overview: String = "",
+    val poster: String = "",
+    val backdrop: String = "",
+    val vote: String = "",
+    val releaseDate: String = ""
 )

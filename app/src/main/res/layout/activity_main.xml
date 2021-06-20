@@ -7,16 +7,16 @@
     tools:context=".ui.main.MainActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:background="@color/purple_500"
-        app:title="Movie App"
-        app:titleTextColor="@android:color/white"
         android:id="@+id/materialToolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:background="@color/purple_500"
         app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Movie App"
+        app:titleTextColor="@android:color/white" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"

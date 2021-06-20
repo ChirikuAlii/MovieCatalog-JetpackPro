@@ -5,7 +5,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.chirikualii.movie_catalog_android_jetpack_pro.abstraction.BaseViewModel
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.MovieRepo
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
-import id.chirikualii.movie_catalog_android_jetpack_pro.ui.movies.MoviesViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,16 +13,19 @@ import javax.inject.Inject
  * github.com/chirikualii
  */
 @HiltViewModel
-class DetailMoviesViewModel @Inject constructor(private val repo: MovieRepo) : BaseViewModel<DetailMoviesViewModel.DetailMoviesState>() {
+class DetailMoviesViewModel @Inject constructor(private val repo: MovieRepo) :
+    BaseViewModel<DetailMoviesViewModel.DetailMoviesState>() {
 
-    sealed class DetailMoviesState{
-        data class Success(val data: Movie): DetailMoviesState()
-        data class Failed(val error: String
-        ):DetailMoviesState()
-        object Loading: DetailMoviesState()
+    sealed class DetailMoviesState {
+        data class Success(val data: Movie) : DetailMoviesState()
+        data class Failed(
+            val error: String
+        ) : DetailMoviesState()
+
+        object Loading : DetailMoviesState()
     }
 
-    fun doLoadDetailMovie(idMovie:String){
+    fun doLoadDetailMovie(idMovie: String) {
 
         _state.value = DetailMoviesState.Loading
 
@@ -32,7 +34,7 @@ class DetailMoviesViewModel @Inject constructor(private val repo: MovieRepo) : B
                 val result = repo.getDetailMovie(idMovie)
                 _state.value = DetailMoviesState.Success(result)
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             _state.value = DetailMoviesState.Failed(e.message.toString())
         }
 

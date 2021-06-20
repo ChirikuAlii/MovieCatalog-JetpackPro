@@ -3,11 +3,8 @@ package id.chirikualii.movie_catalog_android_jetpack_pro.ui.detailTvShows
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.chirikualii.movie_catalog_android_jetpack_pro.abstraction.BaseViewModel
-import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.MovieRepo
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.TvShowRepo
-import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.TvShow
-import id.chirikualii.movie_catalog_android_jetpack_pro.ui.detailMovies.DetailMoviesViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,16 +14,19 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class DetailTvShowViewModel @Inject constructor(private val repo: TvShowRepo) : BaseViewModel<DetailTvShowViewModel.DetailTvShowsState>() {
+class DetailTvShowViewModel @Inject constructor(private val repo: TvShowRepo) :
+    BaseViewModel<DetailTvShowViewModel.DetailTvShowsState>() {
 
-    sealed class DetailTvShowsState{
-        data class Success(val data: TvShow): DetailTvShowsState()
-        data class Failed(val error: String
-        ):DetailTvShowsState()
-        object Loading: DetailTvShowsState()
+    sealed class DetailTvShowsState {
+        data class Success(val data: TvShow) : DetailTvShowsState()
+        data class Failed(
+            val error: String
+        ) : DetailTvShowsState()
+
+        object Loading : DetailTvShowsState()
     }
 
-    fun doLoadDetailMovie(idTvShow:String){
+    fun doLoadDetailMovie(idTvShow: String) {
 
         _state.value = DetailTvShowsState.Loading
 
@@ -35,7 +35,7 @@ class DetailTvShowViewModel @Inject constructor(private val repo: TvShowRepo) : 
                 val result = repo.getDetailTvShow(idTvShow)
                 _state.value = DetailTvShowsState.Success(result)
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             _state.value = DetailTvShowsState.Failed(e.message.toString())
         }
 

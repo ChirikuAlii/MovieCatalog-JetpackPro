@@ -1,22 +1,21 @@
 package id.chirikualii.movie_catalog_android_jetpack_pro.ui.detailMovies
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dagger.hilt.android.AndroidEntryPoint
-import id.chirikualii.movie_catalog_android_jetpack_pro.R
 import id.chirikualii.movie_catalog_android_jetpack_pro.databinding.ActivityDetailMoviesBinding
-import id.chirikualii.movie_catalog_android_jetpack_pro.utils.toast
 
 @AndroidEntryPoint
-class DetailMoviesActivity : AppCompatActivity() , Observer<DetailMoviesViewModel.DetailMoviesState> {
+class DetailMoviesActivity : AppCompatActivity(),
+    Observer<DetailMoviesViewModel.DetailMoviesState> {
 
-    lateinit var binding : ActivityDetailMoviesBinding
+    lateinit var binding: ActivityDetailMoviesBinding
 
-    val mViewModel : DetailMoviesViewModel by lazy {
+    val mViewModel: DetailMoviesViewModel by lazy {
         ViewModelProvider(this).get(DetailMoviesViewModel::class.java)
     }
 
@@ -28,7 +27,7 @@ class DetailMoviesActivity : AppCompatActivity() , Observer<DetailMoviesViewMode
 
         movieId = intent.getStringExtra("MOVIE_ID").toString()
 
-        mViewModel.state.observe(this,this)
+        mViewModel.state.observe(this, this)
         mViewModel.doLoadDetailMovie(movieId)
 
 
@@ -36,7 +35,7 @@ class DetailMoviesActivity : AppCompatActivity() , Observer<DetailMoviesViewMode
 
     override fun onChanged(state: DetailMoviesViewModel.DetailMoviesState?) {
 
-        when (state){
+        when (state) {
 
             is DetailMoviesViewModel.DetailMoviesState.Success -> {
                 binding.tvTitle.text = state.data.title
@@ -51,8 +50,10 @@ class DetailMoviesActivity : AppCompatActivity() , Observer<DetailMoviesViewMode
                     .load("https://image.tmdb.org/t/p/w500${state.data.backdrop}")
                     .into(binding.ivBackdrop)
             }
-            is DetailMoviesViewModel.DetailMoviesState.Failed -> {}
-            is DetailMoviesViewModel.DetailMoviesState.Loading -> {}
+            is DetailMoviesViewModel.DetailMoviesState.Failed -> {
+            }
+            is DetailMoviesViewModel.DetailMoviesState.Loading -> {
+            }
         }
     }
 }
