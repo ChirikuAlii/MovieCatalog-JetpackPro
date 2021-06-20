@@ -1,0 +1,36 @@
+
+
+Unit Testing
+
+1) Movie
+    -Memastikan data movie tidak null
+    -jumlah movie sesuai dengan yang diharapkan
+
+2) Detail Movie
+    -Data detail Movie tidak null
+    -Memastikan data detail movie sesuai ekspetasi
+
+3) TvShow
+    -Memastikan data movie tidak null
+    -jumlah movie sesuai dengan yang diharapkan
+
+4) Detail TvShow
+    -Data detail tvShow tidak null
+    -Memastikan data detail tvshow sesuai ekspetasi
+
+
+Instrumen Testing
+
+1) Movie,TvShow
+    -memastikan recycview moview dan tv show ditampilkan
+    -memastikan tab layout berlajalan dengan melakukan swipe
+    -melakukan scrolling recycviewMovie ke index tertentu
+    -melakukan scrolling recycviewTvShow ke index tertentu
+
+2)Detail Movie
+    -memastikan tvTitle,tvDesc,tvDate,tvPoster,ivBackdrop ditampilkan
+    -memastikan text tvTitle,tvDesc,tvDate sesuai ekspetasi
+
+3)Detail Tv Show
+    -memastikan tvTitleTv,tvDescTv,tvDateTv,tvPosterTv,ivBackdropTv ditampilkan
+    -memastikan text tvTitle,tvDesc,tvDate sesuai ekspetasi
