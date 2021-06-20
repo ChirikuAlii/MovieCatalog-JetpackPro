@@ -1,11 +1,9 @@
 package id.chirikualii.movie_catalog_android_jetpack_pro.ui.detailMovies
 
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.chirikualii.movie_catalog_android_jetpack_pro.abstraction.BaseViewModel
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.MovieRepo
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -14,29 +12,17 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class DetailMoviesViewModel @Inject constructor(private val repo: MovieRepo) :
-    BaseViewModel<DetailMoviesViewModel.DetailMoviesState>() {
+    ViewModel() {
 
-    sealed class DetailMoviesState {
-        data class Success(val data: Movie) : DetailMoviesState()
-        data class Failed(
-            val error: String
-        ) : DetailMoviesState()
+    private lateinit var movieId: String
 
-        object Loading : DetailMoviesState()
+    fun setSelectedMovie(movieId: String) {
+        this.movieId = movieId
     }
 
-    fun doLoadDetailMovie(idMovie: String) {
+    fun doLoadDetailMovie(): Movie {
 
-        _state.value = DetailMoviesState.Loading
-
-        try {
-            viewModelScope.launch {
-                val result = repo.getDetailMovie(idMovie)
-                _state.value = DetailMoviesState.Success(result)
-            }
-        } catch (e: Exception) {
-            _state.value = DetailMoviesState.Failed(e.message.toString())
-        }
+        return repo.getDetailMovie(movieId)
 
     }
 }

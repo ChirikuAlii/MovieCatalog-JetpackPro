@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,7 +16,7 @@ import id.chirikualii.movie_catalog_android_jetpack_pro.utils.view.MarginItemDec
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.view.OnItemClicked
 
 @AndroidEntryPoint
-class TvShowsFragment : Fragment(), Observer<TvShowsViewModel.TvShowsState>, OnItemClicked {
+class TvShowsFragment : Fragment(), OnItemClicked {
 
     private lateinit var binding: FragmentTvShowsBinding
     private lateinit var adapterList: TvShowsListAdapter
@@ -29,8 +28,8 @@ class TvShowsFragment : Fragment(), Observer<TvShowsViewModel.TvShowsState>, OnI
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
+
         binding = FragmentTvShowsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,11 +37,8 @@ class TvShowsFragment : Fragment(), Observer<TvShowsViewModel.TvShowsState>, OnI
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mViewModel.state.observe(viewLifecycleOwner, this)
-        mViewModel.doGetDiscoverTvShow()
-
         adapterList = TvShowsListAdapter(this)
-
+        adapterList.addList(mViewModel.doGetDiscoverTvShow())
         setupView()
     }
 
@@ -55,25 +51,6 @@ class TvShowsFragment : Fragment(), Observer<TvShowsViewModel.TvShowsState>, OnI
 
         }
 
-    }
-
-    override fun onChanged(state: TvShowsViewModel.TvShowsState?) {
-
-        when (state) {
-
-            is TvShowsViewModel.TvShowsState.Success -> {
-                adapterList.addList(state.data)
-
-            }
-
-            is TvShowsViewModel.TvShowsState.Failed -> {
-
-            }
-
-            is TvShowsViewModel.TvShowsState.Loading -> {
-                //loading
-            }
-        }
     }
 
     override fun onTvShowClicked(data: TvShow) {

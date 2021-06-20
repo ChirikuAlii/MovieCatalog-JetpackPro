@@ -9,7 +9,7 @@ import id.chirikualii.movie_catalog_android_jetpack_pro.databinding.ItemListFilm
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.TvShow
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.view.OnItemClicked
 
-class TvShowsListAdapter(val onItemClicked: OnItemClicked) :
+class TvShowsListAdapter(private val onItemClicked: OnItemClicked) :
     RecyclerView.Adapter<TvShowsListAdapter.TvShowHolder>() {
 
     private var listDataFiltered = ArrayList<TvShow>()

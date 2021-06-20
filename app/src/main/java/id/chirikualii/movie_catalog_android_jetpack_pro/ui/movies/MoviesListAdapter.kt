@@ -9,7 +9,7 @@ import id.chirikualii.movie_catalog_android_jetpack_pro.databinding.ItemListFilm
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.view.OnItemClicked
 
-class MoviesListAdapter(val onItemClicked: OnItemClicked) :
+class MoviesListAdapter(private val onItemClicked: OnItemClicked) :
     RecyclerView.Adapter<MoviesListAdapter.MovieHolder>() {
 
     private var listDataFiltered = ArrayList<Movie>()
@@ -19,17 +19,8 @@ class MoviesListAdapter(val onItemClicked: OnItemClicked) :
         RecyclerView.ViewHolder(binding.root)
 
     fun addList(listData: ArrayList<Movie>) {
-        val oldList = items
-//        val diffResult : DiffUtil.DiffResult = DiffUtil.calculateDiff(
-//            HistoryBillDiffCallback(
-//                oldList,
-//                listData
-//            )
-//        )
-
         items = listData
         listDataFiltered = listData
-        // diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {

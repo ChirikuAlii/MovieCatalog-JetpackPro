@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,7 +16,7 @@ import id.chirikualii.movie_catalog_android_jetpack_pro.utils.view.MarginItemDec
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.view.OnItemClicked
 
 @AndroidEntryPoint
-class MoviesFragment : Fragment(), Observer<MoviesViewModel.MoviesState>, OnItemClicked {
+class MoviesFragment : Fragment(), OnItemClicked {
 
     private lateinit var binding: FragmentMoviesBinding
     private lateinit var movieListAdapter: MoviesListAdapter
@@ -29,19 +28,17 @@ class MoviesFragment : Fragment(), Observer<MoviesViewModel.MoviesState>, OnItem
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
+
         binding = FragmentMoviesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mViewModel.state.observe(viewLifecycleOwner, this)
-        mViewModel.doGetDiscoverMovie()
 
         movieListAdapter = MoviesListAdapter(this)
-
+        movieListAdapter.addList(mViewModel.doGetDiscoverMovie())
         setupView()
 
     }
@@ -55,26 +52,6 @@ class MoviesFragment : Fragment(), Observer<MoviesViewModel.MoviesState>, OnItem
         }
 
 
-    }
-
-    override fun onChanged(state: MoviesViewModel.MoviesState?) {
-
-        when (state) {
-
-            is MoviesViewModel.MoviesState.Success -> {
-
-                movieListAdapter.addList(state.data)
-
-            }
-
-            is MoviesViewModel.MoviesState.Failed -> {
-
-            }
-
-            is MoviesViewModel.MoviesState.Loading -> {
-                //loading
-            }
-        }
     }
 
     override fun onMovieClicked(data: Movie) {

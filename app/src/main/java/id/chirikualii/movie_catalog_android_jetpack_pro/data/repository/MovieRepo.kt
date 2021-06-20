@@ -10,10 +10,6 @@ import javax.inject.Inject
  * github.com/chirikualii
  */
 
-/**
- * Create by Chiriku Alii on 6/10/21
- * github.com/chirikualii
- */
 
 class MovieRepo @Inject constructor() {
 

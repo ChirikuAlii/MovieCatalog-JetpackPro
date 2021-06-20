@@ -15,7 +15,7 @@ class Session @Inject constructor(context: Context, val gson: Gson) {
     private val spe = sp.edit()
 
     companion object {
-        private const val SESSION_NAME = "PDAMSession"
+        private const val SESSION_NAME = "MovieCatalogSession"
         private const val LOGIN_PREF = "LOGIN STATE"
     }
 
