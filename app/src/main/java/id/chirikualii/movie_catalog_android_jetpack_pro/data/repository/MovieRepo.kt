@@ -20,4 +20,16 @@ class MovieRepo @Inject constructor() {
    fun getDiscoverMovie() :List<Movie>{
         return DataDummy.getMovieList()
     }
+
+    fun getDetailMovie(idMovie:String) :Movie{
+        var movie = Movie()
+        val data = DataDummy.getMovieList()
+
+        data.forEach {
+            if(idMovie == it.id){
+                movie = it
+            }
+        }
+        return movie
+    }
 }

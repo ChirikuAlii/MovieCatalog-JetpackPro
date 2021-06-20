@@ -37,7 +37,7 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/tvDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/ivPoster"
@@ -46,7 +46,7 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
@@ -59,6 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <ImageView
+        android:scaleType="centerCrop"
         android:id="@+id/ivBackdrop"
         android:layout_width="match_parent"
         android:layout_height="250dp"
@@ -67,6 +68,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:scaleType="centerCrop"
+        android:id="@+id/ivBackdropBackground"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@android:color/black"
+        android:alpha="0.4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:scaleType="centerCrop"
         android:id="@+id/ivPoster"
         android:layout_width="150dp"
         android:layout_height="200dp"
