@@ -1,6 +1,8 @@
 package id.chirikualii.movie_catalog_android_jetpack_pro.data.repository
 
 
+import id.chirikualii.movie_catalog_android_jetpack_pro.data.remote.ApiService
+import id.chirikualii.movie_catalog_android_jetpack_pro.data.remote.response.DiscoverMovieResponse
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.DataDummy
 import javax.inject.Inject
@@ -11,10 +13,15 @@ import javax.inject.Inject
  */
 
 
-class MovieRepo @Inject constructor() {
+class MovieRepo @Inject constructor(val service: ApiService) {
 
     fun getDiscoverMovie(): List<Movie> {
         return DataDummy.getMovieList()
+    }
+
+    suspend fun getDiscoverMovieApi() :DiscoverMovieResponse{
+
+        return service.discoverMovie()
     }
 
     fun getDetailMovie(idMovie: String): Movie {
