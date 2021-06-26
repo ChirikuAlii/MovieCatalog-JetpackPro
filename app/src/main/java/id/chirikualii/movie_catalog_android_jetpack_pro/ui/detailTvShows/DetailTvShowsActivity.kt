@@ -23,21 +23,23 @@ class DetailTvShowsActivity : AppCompatActivity() {
 
         tvShowId = intent.getStringExtra("TVSHOW_ID").toString()
 
-        mViewModel.setSelectedTvShow(tvShowId)
-        val data = mViewModel.doLoadDetailTvShow()
 
-        binding.tvTitleTv.text = data.title
-        binding.tvDescTv.text = data.overview
-        binding.tvDateTv.text = data.releaseDate
+        mViewModel.doLoadDetailTvShow(tvShowId).observe(this, { data ->
+            binding.tvTitleTv.text = data.title
+            binding.tvDescTv.text = data.overview
+            binding.tvDateTv.text = data.releaseDate
 
-        Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w500${data.poster}")
-            .transform(RoundedCorners(8))
-            .into(binding.ivPosterTv)
+            Glide.with(this)
+                .load("https://image.tmdb.org/t/p/w500${data.poster}")
+                .transform(RoundedCorners(8))
+                .into(binding.ivPosterTv)
 
-        Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w500${data.backdrop}")
-            .into(binding.ivBackdropTv)
+            Glide.with(this)
+                .load("https://image.tmdb.org/t/p/w500${data.backdrop}")
+                .into(binding.ivBackdropTv)
+        })
+
+
     }
 
 }

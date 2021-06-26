@@ -1,5 +1,6 @@
 package id.chirikualii.movie_catalog_android_jetpack_pro.ui.detailMovies
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.MovieRepo
@@ -14,15 +15,15 @@ import javax.inject.Inject
 class DetailMoviesViewModel @Inject constructor(private val repo: MovieRepo) :
     ViewModel() {
 
-    private lateinit var movieId: String
+//    private lateinit var movieId: String
+//
+//    fun setSelectedMovie(movieId: String) {
+//        this.movieId = movieId
+//    }
 
-    fun setSelectedMovie(movieId: String) {
-        this.movieId = movieId
+    fun doLoadDetailMovie(movieId: String): LiveData<Movie> {
+
+        return repo.getDetailMovie(movieId.toInt())
     }
 
-    fun doLoadDetailMovie(): Movie {
-
-        return repo.getDetailMovie(movieId)
-
-    }
 }

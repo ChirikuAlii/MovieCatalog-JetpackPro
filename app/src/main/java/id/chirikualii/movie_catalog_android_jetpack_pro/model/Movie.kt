@@ -5,11 +5,11 @@ package id.chirikualii.movie_catalog_android_jetpack_pro.model
  * github.com/chirikualii
  */
 data class Movie(
-    val id: String = "",
-    val title: String = "",
-    val overview: String = "",
-    val poster: String = "",
-    val backdrop: String = "",
-    val vote: String = "",
-    val releaseDate: String = ""
+    var id: String = "",
+    var title: String = "",
+    var overview: String = "",
+    var poster: String = "",
+    var backdrop: String = "",
+    var vote: String = "",
+    var releaseDate: String = ""
 )

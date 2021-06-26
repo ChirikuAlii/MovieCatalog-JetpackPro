@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,10 +37,14 @@ class TvShowsFragment : Fragment(), OnItemClicked {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         adapterList = TvShowsListAdapter(this)
-        adapterList.addList(mViewModel.doGetDiscoverTvShow())
         setupView()
+
+        mViewModel.doGetDiscoverTvShow().observe(viewLifecycleOwner, { tvShows ->
+
+            adapterList.addList(tvShows)
+            binding.recyclerViewTVShow.adapter = adapterList
+        })
     }
 
     private fun setupView() {
@@ -47,7 +52,6 @@ class TvShowsFragment : Fragment(), OnItemClicked {
         binding.recyclerViewTVShow.apply {
             layoutManager = LinearLayoutManager(requireContext())
             addItemDecoration(MarginItemDecoration(16))
-            adapter = adapterList
 
         }
 
