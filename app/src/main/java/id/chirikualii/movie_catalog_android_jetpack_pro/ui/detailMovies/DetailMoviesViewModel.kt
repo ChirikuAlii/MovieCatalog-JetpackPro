@@ -15,11 +15,6 @@ import javax.inject.Inject
 class DetailMoviesViewModel @Inject constructor(private val repo: MovieRepo) :
     ViewModel() {
 
-//    private lateinit var movieId: String
-//
-//    fun setSelectedMovie(movieId: String) {
-//        this.movieId = movieId
-//    }
 
     fun doLoadDetailMovie(movieId: String): LiveData<Movie> {
 

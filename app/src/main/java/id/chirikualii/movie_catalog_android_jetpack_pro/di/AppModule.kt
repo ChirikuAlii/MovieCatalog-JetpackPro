@@ -30,7 +30,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient) : Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/3/")
             .addConverterFactory(GsonConverterFactory.create(Gson()))
@@ -40,7 +40,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient() : OkHttpClient {
+    fun provideOkHttpClient(): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor.Level.BODY
@@ -61,13 +61,13 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit) : ApiService {
+    fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideRemoteDataSource(service: ApiService): RemoteDataSource{
+    fun provideRemoteDataSource(service: ApiService): RemoteDataSource {
         return RemoteDataSource(service)
     }
 

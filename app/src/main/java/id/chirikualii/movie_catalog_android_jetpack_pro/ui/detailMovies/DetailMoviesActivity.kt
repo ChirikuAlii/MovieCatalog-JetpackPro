@@ -31,8 +31,6 @@ class DetailMoviesActivity : AppCompatActivity() {
 
         movieId = intent.getStringExtra("MOVIE_ID").toString()
 
-       // mViewModel.setSelectedMovie(movieId)
-
         mViewModel.doLoadDetailMovie(movieId).observe(this, Observer { data ->
 
             binding.tvTitle.text = data.title
@@ -47,8 +45,6 @@ class DetailMoviesActivity : AppCompatActivity() {
                 .load("https://image.tmdb.org/t/p/w500${data.backdrop}")
                 .into(binding.ivBackdrop)
         })
-
-
 
 
     }

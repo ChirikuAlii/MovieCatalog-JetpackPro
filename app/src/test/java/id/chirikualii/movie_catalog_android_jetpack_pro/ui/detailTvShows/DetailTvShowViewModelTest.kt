@@ -45,7 +45,7 @@ class DetailTvShowViewModelTest {
     }
 
     @Test
-    fun testDoLoadDetailTvShow(){
+    fun testDoLoadDetailTvShow() {
         val tvShowDummy = MutableLiveData<TvShow>()
         tvShowDummy.value = dummyTvShow
 

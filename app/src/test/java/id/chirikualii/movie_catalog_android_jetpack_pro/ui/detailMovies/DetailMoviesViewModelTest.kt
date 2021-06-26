@@ -45,7 +45,7 @@ class DetailMoviesViewModelTest {
     }
 
     @Test
-    fun testDoLoadDetailMovie(){
+    fun testDoLoadDetailMovie() {
         val movieDummy = MutableLiveData<Movie>()
         movieDummy.value = dummyMovie
 

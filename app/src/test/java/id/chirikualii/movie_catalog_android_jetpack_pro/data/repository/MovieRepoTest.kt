@@ -2,9 +2,9 @@ package id.chirikualii.movie_catalog_android_jetpack_pro.data.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.eq
+import com.nhaarman.mockitokotlin2.verify
 import id.chirikualii.movie_catalog_android_jetpack_pro.LiveDataTestUtil
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.remote.RemoteDataSource
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.DataDummy
@@ -34,13 +34,15 @@ class MovieRepoTest {
     private val movieResponse = DataDummy.getMovieResponseList()[1]
 
     @Test
-    fun getDiscoverMovie(){
-       runBlocking {
-           doAnswer { invocationOnMock ->
-               (invocationOnMock.arguments[0] as RemoteDataSource.LoadDiscoverMovieListener).onMoviesLoaded(listMovieResponse)
-               null
-           }.`when`(remote).discoverMovies(any())
-       }
+    fun getDiscoverMovie() {
+        runBlocking {
+            doAnswer { invocationOnMock ->
+                (invocationOnMock.arguments[0] as RemoteDataSource.LoadDiscoverMovieListener).onMoviesLoaded(
+                    listMovieResponse
+                )
+                null
+            }.`when`(remote).discoverMovies(any())
+        }
 
         val data = LiveDataTestUtil.getValue(repo.getDiscoverMovieApi())
 
@@ -53,10 +55,12 @@ class MovieRepoTest {
     }
 
     @Test
-    fun getDetailMovie(){
+    fun getDetailMovie() {
         runBlocking {
             doAnswer { invocationOnMock ->
-                (invocationOnMock.arguments[1] as RemoteDataSource.LoadMovieDetailListener).onMovieDetailLoaded(movieResponse)
+                (invocationOnMock.arguments[1] as RemoteDataSource.LoadMovieDetailListener).onMovieDetailLoaded(
+                    movieResponse
+                )
                 null
             }.`when`(remote).movieDetail(eq(movieId), any())
         }
@@ -68,6 +72,6 @@ class MovieRepoTest {
         }
 
         assertNotNull(data)
-        assertEquals(movieResponse.id,data.id.toInt())
+        assertEquals(movieResponse.id, data.id.toInt())
     }
 }

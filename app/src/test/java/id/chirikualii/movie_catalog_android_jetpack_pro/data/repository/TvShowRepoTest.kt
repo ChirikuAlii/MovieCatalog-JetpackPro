@@ -8,7 +8,6 @@ import com.nhaarman.mockitokotlin2.verify
 import id.chirikualii.movie_catalog_android_jetpack_pro.LiveDataTestUtil
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.remote.RemoteDataSource
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.DataDummy
-import junit.framework.Assert
 import junit.framework.Assert.assertEquals
 import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.runBlocking
@@ -35,10 +34,12 @@ class TvShowRepoTest {
     private val tvShowResponse = DataDummy.getTvShowResponseList()[1]
 
     @Test
-    fun getDiscoverTvShow(){
+    fun getDiscoverTvShow() {
         runBlocking {
             doAnswer { invocationOnMock ->
-                (invocationOnMock.arguments[0] as RemoteDataSource.LoadDiscoverTvShowListener).onTvShowsLoaded(listTvShowResponse)
+                (invocationOnMock.arguments[0] as RemoteDataSource.LoadDiscoverTvShowListener).onTvShowsLoaded(
+                    listTvShowResponse
+                )
                 null
             }.`when`(remote).discoverTvShows(any())
         }
@@ -54,10 +55,12 @@ class TvShowRepoTest {
     }
 
     @Test
-    fun getDetailTvShow(){
+    fun getDetailTvShow() {
         runBlocking {
             doAnswer { invocationOnMock ->
-                (invocationOnMock.arguments[1] as RemoteDataSource.LoadTvShowDetailListener).onTvShowDetailLoaded(tvShowResponse)
+                (invocationOnMock.arguments[1] as RemoteDataSource.LoadTvShowDetailListener).onTvShowDetailLoaded(
+                    tvShowResponse
+                )
                 null
             }.`when`(remote).tvShowDetail(eq(tvShowId), any())
         }

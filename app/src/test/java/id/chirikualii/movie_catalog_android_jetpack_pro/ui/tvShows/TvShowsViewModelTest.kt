@@ -4,11 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
-import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.MovieRepo
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.TvShowRepo
-import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.TvShow
-import id.chirikualii.movie_catalog_android_jetpack_pro.ui.movies.MoviesViewModel
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.DataDummy
 import junit.framework.Assert.assertEquals
 import junit.framework.TestCase.assertNotNull
@@ -38,7 +35,8 @@ class TvShowsViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var observer : Observer<ArrayList<TvShow>>
+    private lateinit var observer: Observer<ArrayList<TvShow>>
+
     @Before
     fun setUp() {
         mViewModel = (TvShowsViewModel(repo))

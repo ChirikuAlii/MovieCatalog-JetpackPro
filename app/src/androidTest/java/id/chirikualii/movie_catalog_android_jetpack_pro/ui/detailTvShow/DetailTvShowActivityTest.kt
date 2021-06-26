@@ -37,7 +37,7 @@ class DetailTvShowActivityTest {
         ) {
             override fun getActivityIntent(): Intent {
                 val targetContext: Context =
-                    InstrumentationRegistry.getInstrumentation().getTargetContext()
+                    InstrumentationRegistry.getInstrumentation().targetContext
                 val result = Intent(targetContext, DetailTvShowsActivity::class.java)
                 result.putExtra("TVSHOW_ID", dummyTvShow.id)
                 return result
@@ -51,12 +51,12 @@ class DetailTvShowActivityTest {
     }
 
     @After
-    fun tearDown(){
+    fun tearDown() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
     }
 
     @Test
-    fun detailTvShow(){
+    fun detailTvShow() {
         onView(ViewMatchers.withId(R.id.tvTitleTv))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         onView(ViewMatchers.withId(R.id.tvDateTv))

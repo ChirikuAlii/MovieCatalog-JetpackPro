@@ -36,7 +36,7 @@ class DetailMovieActivityTest {
         ) {
             override fun getActivityIntent(): Intent {
                 val targetContext: Context =
-                    InstrumentationRegistry.getInstrumentation().getTargetContext()
+                    InstrumentationRegistry.getInstrumentation().targetContext
                 val result = Intent(targetContext, DetailMoviesActivity::class.java)
                 result.putExtra("MOVIE_ID", dummyMovie.id)
                 return result
@@ -50,12 +50,12 @@ class DetailMovieActivityTest {
     }
 
     @After
-    fun tearDown(){
+    fun tearDown() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
     }
 
     @Test
-    fun detailMovie(){
+    fun detailMovie() {
 
         onView(ViewMatchers.withId(R.id.tvTitle))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))

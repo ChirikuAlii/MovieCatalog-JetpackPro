@@ -25,9 +25,9 @@ class RemoteDataSource @Inject constructor(private val service: ApiService) {
     }
 
     suspend fun movieDetail(
-        movieId:Int,
+        movieId: Int,
         listener: LoadMovieDetailListener
-    ){
+    ) {
         EspressoIdlingResource.increment()
         service.detailMovie(movieId).await().let { detailMovie ->
             listener.onMovieDetailLoaded(detailMovie)
@@ -37,7 +37,7 @@ class RemoteDataSource @Inject constructor(private val service: ApiService) {
 
     suspend fun discoverTvShows(
         listener: LoadDiscoverTvShowListener
-    ){
+    ) {
         EspressoIdlingResource.increment()
         service.discoverTvShows().await().results.let { tvShows ->
             listener.onTvShowsLoaded(tvShows)
@@ -46,9 +46,9 @@ class RemoteDataSource @Inject constructor(private val service: ApiService) {
     }
 
     suspend fun tvShowDetail(
-        tvShowId:Int,
+        tvShowId: Int,
         listener: LoadTvShowDetailListener
-    ){
+    ) {
         EspressoIdlingResource.increment()
         service.detailTvShow(tvShowId).await().let { detailTvShow ->
             listener.onTvShowDetailLoaded(detailTvShow)
@@ -97,7 +97,7 @@ class RemoteDataSource @Inject constructor(private val service: ApiService) {
         fun onTvShowsLoaded(tvShowResponse: List<DiscoverTvShowsResponse.TvShowsResponse>)
     }
 
-    interface LoadTvShowDetailListener{
+    interface LoadTvShowDetailListener {
         fun onTvShowDetailLoaded(tvShowResponse: DiscoverTvShowsResponse.TvShowsResponse)
     }
 }

@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailTvShowViewModel @Inject constructor(private val repo: TvShowRepo) : ViewModel() {
 
-    fun doLoadDetailTvShow(tvShowId:String): LiveData<TvShow> {
+    fun doLoadDetailTvShow(tvShowId: String): LiveData<TvShow> {
         return repo.getDetailTvShow(tvShowId.toInt())
     }
 }

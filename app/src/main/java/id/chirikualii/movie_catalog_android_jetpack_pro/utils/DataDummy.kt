@@ -204,7 +204,7 @@ object DataDummy {
         )
     }
 
-    fun getMovieResponseList(): List<DiscoverMovieResponse.MovieResponse>{
+    fun getMovieResponseList(): List<DiscoverMovieResponse.MovieResponse> {
         return listOf(
             DiscoverMovieResponse.MovieResponse(
                 id = 337404,
@@ -301,7 +301,7 @@ object DataDummy {
         )
     }
 
-    fun getTvShowResponseList() :List<DiscoverTvShowsResponse.TvShowsResponse>{
+    fun getTvShowResponseList(): List<DiscoverTvShowsResponse.TvShowsResponse> {
         return listOf(
             DiscoverTvShowsResponse.TvShowsResponse(
                 id = 63174,
@@ -309,7 +309,7 @@ object DataDummy {
                 overview = "Bored and unhappy as the Lord of Hell, Lucifer Morningstar abandoned his throne and retired to Los Angeles, where he has teamed up with LAPD detective Chloe Decker to take down criminals. But the longer he's away from the underworld, the greater the threat that the worst of humanity could escape.",
                 posterPath = "/4EYPN5mVIhKLfxGruy7Dy41dTVn.jpg",
                 backdropPath = "/h48Dpb7ljv8WQvVdyFWVLz64h4G.jpg",
-                voteAverage= 8.5,
+                voteAverage = 8.5,
                 firstAirDate = "2016-01-25"
             ),
             DiscoverTvShowsResponse.TvShowsResponse(

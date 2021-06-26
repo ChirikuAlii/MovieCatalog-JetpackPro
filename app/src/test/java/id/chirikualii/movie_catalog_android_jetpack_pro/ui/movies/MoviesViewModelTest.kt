@@ -3,19 +3,11 @@ package id.chirikualii.movie_catalog_android_jetpack_pro.ui.movies
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import id.chirikualii.movie_catalog_android_jetpack_pro.data.remote.ApiClient
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.MovieRepo
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.DataDummy
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -43,7 +35,7 @@ class MoviesViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var observer :Observer<ArrayList<Movie>>
+    private lateinit var observer: Observer<ArrayList<Movie>>
 
     @Before
     fun setUp() {
@@ -51,7 +43,7 @@ class MoviesViewModelTest {
     }
 
     @Test
-    fun doGetDiscoverMovie()  {
+    fun doGetDiscoverMovie() {
         val movies = MutableLiveData<ArrayList<Movie>>()
         val arrayList = arrayListOf<Movie>()
         arrayList.addAll(dummyMovies)
