@@ -51,7 +51,7 @@ class MoviesViewModelTest {
     }
 
     @Test
-    fun testDoGetDiscoverMovie()  {
+    fun doGetDiscoverMovie()  {
         val movies = MutableLiveData<ArrayList<Movie>>()
         val arrayList = arrayListOf<Movie>()
         arrayList.addAll(dummyMovies)
