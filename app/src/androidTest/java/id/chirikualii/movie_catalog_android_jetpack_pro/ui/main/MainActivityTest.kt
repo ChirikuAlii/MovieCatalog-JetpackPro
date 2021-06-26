@@ -3,13 +3,16 @@ package id.chirikualii.movie_catalog_android_jetpack_pro.ui.main
 import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
 import id.chirikualii.movie_catalog_android_jetpack_pro.R
+import id.chirikualii.movie_catalog_android_jetpack_pro.utils.EspressoIdlingResource
 import org.hamcrest.Matchers.notNullValue
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,8 +28,15 @@ class MainActivityTest {
     @Before
     fun setUp(){
         activity = activityTestRule.activity
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
         activityTestRule.launchActivity(Intent())
         assertThat(activityTestRule,notNullValue())
+
+    }
+
+    @After
+    fun tearDown(){
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
     }
 
     @Test

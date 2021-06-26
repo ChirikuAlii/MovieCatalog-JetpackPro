@@ -3,6 +3,7 @@ package id.chirikualii.movie_catalog_android_jetpack_pro.ui.detailTvShow
 import android.content.Context
 import android.content.Intent
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.platform.app.InstrumentationRegistry
@@ -10,6 +11,8 @@ import androidx.test.rule.ActivityTestRule
 import id.chirikualii.movie_catalog_android_jetpack_pro.R
 import id.chirikualii.movie_catalog_android_jetpack_pro.ui.detailTvShows.DetailTvShowsActivity
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.DataDummy
+import id.chirikualii.movie_catalog_android_jetpack_pro.utils.EspressoIdlingResource
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -44,8 +47,14 @@ class DetailTvShowActivityTest {
     @Before
     fun setUp() {
         context = activityTestRule.activity.applicationContext
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
     }
-    
+
+    @After
+    fun tearDown(){
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
+    }
+
     @Test
     fun detailTvShow(){
         onView(ViewMatchers.withId(R.id.tvTitleTv))
