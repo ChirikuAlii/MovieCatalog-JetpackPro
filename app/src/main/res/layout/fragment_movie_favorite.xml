@@ -11,6 +11,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
+        android:visibility="invisible"
         android:id="@+id/tvEmptyMovieFavorite"
         android:textColor="@android:color/black"
         android:textSize="18sp"

@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import id.chirikualii.movie_catalog_android_jetpack_pro.R
 import id.chirikualii.movie_catalog_android_jetpack_pro.databinding.ActivityFavoriteBinding
 import id.chirikualii.movie_catalog_android_jetpack_pro.ui.favorite.movieFavorite.MovieFavoriteFragment
@@ -12,7 +14,9 @@ import id.chirikualii.movie_catalog_android_jetpack_pro.ui.favorite.tvShowFavori
 import id.chirikualii.movie_catalog_android_jetpack_pro.ui.main.TabAdapter
 import id.chirikualii.movie_catalog_android_jetpack_pro.ui.movies.MoviesFragment
 import id.chirikualii.movie_catalog_android_jetpack_pro.ui.tvShows.TvShowsFragment
+import id.chirikualii.movie_catalog_android_jetpack_pro.ui.tvShows.TvShowsViewModel
 
+@AndroidEntryPoint
 class FavoriteActivity : AppCompatActivity() {
 
     private val movieFragment = MovieFavoriteFragment()
