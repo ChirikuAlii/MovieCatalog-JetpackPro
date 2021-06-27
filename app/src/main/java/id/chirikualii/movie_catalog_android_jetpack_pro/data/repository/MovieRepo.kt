@@ -97,7 +97,7 @@ class MovieRepo @Inject constructor(
         }.asLiveData()
     }
 
-    fun getDetailMovie2(movieId: Int) :LiveData<MovieEntity> = localDataSource.getDetailMovie(movieId)
+    fun getDetailMovie(movieId: Int) :LiveData<MovieEntity> = localDataSource.getDetailMovie(movieId)
 
     fun getFavoriteMovies(): LiveData<PagedList<MovieEntity>>{
         val config = PagedList.Config.Builder().apply {
@@ -110,32 +110,12 @@ class MovieRepo @Inject constructor(
 
     fun updateFavoriteMovie(movieEntity: MovieEntity){
         CoroutineScope(IO).launch {
+            when(movieEntity.isFavorite){
+
+                0-> {movieEntity.isFavorite = 1}
+                1-> {movieEntity.isFavorite = 0}
+            }
             localDataSource.updateFavoriteMovie(movieEntity)
         }
-    }
-
-    fun getDetailMovie(movieId: Int): LiveData<Movie> {
-        val result = MutableLiveData<Movie>()
-        CoroutineScope(IO).launch {
-            remoteDataSource.movieDetail(movieId,
-                object : RemoteDataSource.LoadMovieDetailListener {
-                    override fun onMovieDetailLoaded(movieResponse: DiscoverMovieResponse.MovieResponse) {
-                        movieResponse.let {
-                            val movie = Movie(
-                                id = it.id.toString(),
-                                title = it.title,
-                                overview = it.overview,
-                                poster = it.posterPath,
-                                backdrop = it.backdropPath.toString(),
-                                vote = it.voteAverage.toString(),
-                                releaseDate = it.releaseDate
-                            )
-                            result.postValue(movie)
-                        }
-                    }
-
-                })
-        }
-        return result
     }
 }

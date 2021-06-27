@@ -94,7 +94,7 @@ class TvShowRepo @Inject constructor(
         }.asLiveData()
     }
 
-    fun getDetailTvShow2(tvShowId: Int):LiveData<TvShowEntity> = localDataSource.getDetailTvShow(tvShowId)
+    fun getDetailTvShow(tvShowId: Int):LiveData<TvShowEntity> = localDataSource.getDetailTvShow(tvShowId)
 
     fun getFavoriteTvShows(): LiveData<PagedList<TvShowEntity>>{
         val config = PagedList.Config.Builder().apply {
@@ -107,32 +107,12 @@ class TvShowRepo @Inject constructor(
 
     fun updateFavoriteTvShow(tvShow:TvShowEntity){
         CoroutineScope(Dispatchers.IO).launch {
+            when(tvShow.isFavorite){
+                0 -> {tvShow.isFavorite = 1}
+                1 -> {tvShow.isFavorite = 0}
+            }
             localDataSource.updateFavoriteTvShow(tvShow)
         }
     }
 
-    fun getDetailTvShow(tvShowId: Int): LiveData<TvShow> {
-        val result = MutableLiveData<TvShow>()
-        CoroutineScope(Dispatchers.IO).launch {
-            remoteDataSource.tvShowDetail(tvShowId,
-                object : RemoteDataSource.LoadTvShowDetailListener {
-                    override fun onTvShowDetailLoaded(tvShowResponse: DiscoverTvShowsResponse.TvShowsResponse) {
-                        tvShowResponse.let {
-                            val tvShow = TvShow(
-                                id = it.id.toString(),
-                                title = it.name,
-                                overview = it.overview,
-                                poster = it.posterPath,
-                                backdrop = it.backdropPath.toString(),
-                                vote = it.voteAverage.toString(),
-                                releaseDate = it.firstAirDate
-                            )
-                            result.postValue(tvShow)
-                        }
-                    }
-
-                })
-        }
-        return result
-    }
 }
