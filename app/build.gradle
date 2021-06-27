@@ -84,8 +84,10 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
+    //Paging
+    implementation "androidx.paging:paging-runtime-ktx:3.0.0"
 
-    //testing
+    //Testing
     implementation "androidx.test.espresso:espresso-idling-resource:3.3.0"
     testImplementation 'junit:junit:4.+'
     testImplementation "androidx.arch.core:core-testing:2.1.0"

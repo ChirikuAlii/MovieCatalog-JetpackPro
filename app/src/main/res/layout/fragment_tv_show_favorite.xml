@@ -13,7 +13,7 @@
     <TextView
         android:id="@+id/tvEmptyTvShowFavorite"
         android:textColor="@android:color/black"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:layout_gravity="center"
         android:text="Empty Tv Show Favorite"
         android:layout_width="wrap_content"
