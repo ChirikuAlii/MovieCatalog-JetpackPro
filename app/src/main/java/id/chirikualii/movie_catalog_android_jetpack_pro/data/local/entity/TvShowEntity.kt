@@ -16,11 +16,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class TvShowEntity(
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Int? = null,
-
-    @NonNull
+    @PrimaryKey
     @ColumnInfo(name = "tv_show_id")
     var tvShowId: Int = 0,
 

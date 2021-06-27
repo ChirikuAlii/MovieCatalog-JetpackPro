@@ -55,7 +55,7 @@ object AppModule {
             .connectTimeout(timeOut, TimeUnit.SECONDS)
             .readTimeout(timeOut, TimeUnit.SECONDS)
             .writeTimeout(timeOut, TimeUnit.SECONDS)
-            .addInterceptor(httpLoggingInterceptor)
+           // .addInterceptor(httpLoggingInterceptor)
             .build()
     }
 

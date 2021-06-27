@@ -1,8 +1,14 @@
 package id.chirikualii.movie_catalog_android_jetpack_pro.data.remote
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.remote.response.DiscoverMovieResponse
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.remote.response.DiscoverTvShowsResponse
+import id.chirikualii.movie_catalog_android_jetpack_pro.data.vo.ApiResponse
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.EspressoIdlingResource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.await
 import javax.inject.Inject
 
@@ -22,6 +28,46 @@ class RemoteDataSource @Inject constructor(private val service: ApiService) {
             )
             EspressoIdlingResource.decrement()
         }
+    }
+
+    fun discoverMovies2(): LiveData<ApiResponse<List<DiscoverMovieResponse.MovieResponse>>> {
+        EspressoIdlingResource.increment()
+        val result = MutableLiveData<ApiResponse<List<DiscoverMovieResponse.MovieResponse>>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = service.discoverMovie().await()
+                result.postValue(ApiResponse.success(response.movieResponses))
+            }catch (e:Exception){
+                result.postValue(
+                    ApiResponse.error(
+                        e.message.toString(),
+                        mutableListOf()
+                    )
+                )
+            }
+        }
+        EspressoIdlingResource.decrement()
+        return result
+    }
+
+     fun discoverTvShows2(): LiveData<ApiResponse<List<DiscoverTvShowsResponse.TvShowsResponse>>> {
+        EspressoIdlingResource.increment()
+        val result = MutableLiveData<ApiResponse<List<DiscoverTvShowsResponse.TvShowsResponse>>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = service.discoverTvShows().await()
+                result.postValue(ApiResponse.success(response.results))
+            }catch (e:Exception){
+                result.postValue(
+                    ApiResponse.error(
+                        e.message.toString(),
+                        mutableListOf()
+                    )
+                )
+            }
+        }
+        EspressoIdlingResource.decrement()
+        return result
     }
 
     suspend fun movieDetail(

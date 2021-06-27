@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import id.chirikualii.movie_catalog_android_jetpack_pro.data.local.entity.TvShowEntity
 import id.chirikualii.movie_catalog_android_jetpack_pro.databinding.FragmentTvShowsBinding
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.TvShow
 import id.chirikualii.movie_catalog_android_jetpack_pro.ui.detailTvShows.DetailTvShowsActivity
@@ -40,9 +41,9 @@ class TvShowsFragment : Fragment(), OnItemClicked {
         setupView()
 
         mViewModel.doGetDiscoverTvShow().observe(viewLifecycleOwner, { tvShows ->
-
-            adapterList.addList(tvShows)
+            adapterList.submitList(tvShows.data)
             binding.recyclerViewTVShow.adapter = adapterList
+            adapterList.notifyDataSetChanged()
         })
     }
 
@@ -56,10 +57,10 @@ class TvShowsFragment : Fragment(), OnItemClicked {
 
     }
 
-    override fun onTvShowClicked(data: TvShow) {
+    override fun onTvShowClicked(data: TvShowEntity?) {
         super.onTvShowClicked(data)
         val intent = Intent(requireContext(), DetailTvShowsActivity::class.java)
-        intent.putExtra("TVSHOW_ID", data.id)
+        intent.putExtra("TVSHOW_ID", data?.tvShowId.toString())
         requireContext().startActivity(intent)
     }
 

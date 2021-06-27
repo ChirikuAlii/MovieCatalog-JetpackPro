@@ -16,11 +16,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class MovieEntity(
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Int? = null,
 
-    @NonNull
+    @PrimaryKey
     @ColumnInfo(name = "movie_id")
     var movieId: Int = 0,
 
@@ -42,4 +39,6 @@ data class MovieEntity(
     @NonNull
     @ColumnInfo(name = "is_favorite")
     var isFavorite: Int = 0
-): Parcelable
+): Parcelable{
+
+}

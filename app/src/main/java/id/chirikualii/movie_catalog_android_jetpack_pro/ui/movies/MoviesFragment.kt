@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import id.chirikualii.movie_catalog_android_jetpack_pro.data.local.entity.MovieEntity
+import id.chirikualii.movie_catalog_android_jetpack_pro.data.vo.Status
 import id.chirikualii.movie_catalog_android_jetpack_pro.databinding.FragmentMoviesBinding
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
 import id.chirikualii.movie_catalog_android_jetpack_pro.ui.detailMovies.DetailMoviesActivity
@@ -37,12 +39,33 @@ class MoviesFragment : Fragment(), OnItemClicked {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movieListAdapter = MoviesListAdapter(this)
         setupView()
 
-        mViewModel.doGetDiscoverMovieApi().observe(viewLifecycleOwner, { data ->
-            movieListAdapter.addList(data)
-            binding.recyclerViewMovie.adapter = movieListAdapter
+        mViewModel.doGetDiscoverMovieApi().observe(viewLifecycleOwner, { result ->
+            if(result !=null){
+                when(result.status){
+                    Status.LOADING -> {
+                        binding.progressBarMovies.visibility = View.VISIBLE
+                    }
+                    Status.SUCCESS -> {
+                        binding.progressBarMovies.visibility = View.INVISIBLE
+                        binding.recyclerViewMovie.adapter?.let {  adapter ->
+                            when(adapter){
+                                is MoviesListAdapter -> {
+                                    adapter.submitList(result.data)
+                                    adapter.notifyDataSetChanged()
+                                }
+                            }
+
+                        }
+
+                    }
+                    Status.ERROR -> {
+                        binding.progressBarMovies.visibility = View.INVISIBLE
+
+                    }
+                }
+            }
 
         })
 
@@ -53,14 +76,15 @@ class MoviesFragment : Fragment(), OnItemClicked {
         binding.recyclerViewMovie.apply {
             layoutManager = LinearLayoutManager(requireContext())
             addItemDecoration(MarginItemDecoration(16))
+            adapter =  MoviesListAdapter(this@MoviesFragment)
         }
 
     }
 
-    override fun onMovieClicked(data: Movie) {
+    override fun onMovieClicked(data: MovieEntity?) {
         super.onMovieClicked(data)
         val intent = Intent(requireContext(), DetailMoviesActivity::class.java)
-        intent.putExtra("MOVIE_ID", data.id)
+        intent.putExtra("MOVIE_ID", data?.movieId.toString())
         requireContext().startActivity(intent)
     }
 }

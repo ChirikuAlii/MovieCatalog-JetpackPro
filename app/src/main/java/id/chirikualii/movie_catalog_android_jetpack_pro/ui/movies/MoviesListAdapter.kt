@@ -2,26 +2,52 @@ package id.chirikualii.movie_catalog_android_jetpack_pro.ui.movies
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import id.chirikualii.movie_catalog_android_jetpack_pro.data.local.entity.MovieEntity
 import id.chirikualii.movie_catalog_android_jetpack_pro.databinding.ItemListFilmBinding
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
+import id.chirikualii.movie_catalog_android_jetpack_pro.utils.loadFromUrl
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.view.OnItemClicked
 
 class MoviesListAdapter(private val onItemClicked: OnItemClicked) :
-    RecyclerView.Adapter<MoviesListAdapter.MovieHolder>() {
+    PagedListAdapter<MovieEntity,MoviesListAdapter.MovieHolder>(DIFF_CALLBACK) {
 
-    private var listDataFiltered = ArrayList<Movie>()
-    private var items: ArrayList<Movie> = ArrayList()
+
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieEntity>() {
+            override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+                return oldItem.movieId == newItem.movieId
+            }
+            override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
 
     inner class MovieHolder(val binding: ItemListFilmBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root){
 
-    fun addList(listData: ArrayList<Movie>) {
-        items = listData
-        listDataFiltered = listData
-    }
+            fun bind(data:MovieEntity){
+              
+            Glide.with(itemView)
+                .load("https://image.tmdb.org/t/p/w185${data?.poster}")
+                .transform(RoundedCorners(8))
+                .into(binding.ivPoster)
+
+                binding.tvDescFilm.text = data?.desc
+                binding.tvTitleFilm.text = data?.title
+
+                itemView.setOnClickListener {
+                    onItemClicked.onMovieClicked(data)
+
+                }
+
+            }
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {
         val binding =
@@ -30,25 +56,9 @@ class MoviesListAdapter(private val onItemClicked: OnItemClicked) :
     }
 
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
-        val data = listDataFiltered[position]
-        with(holder) {
-
-            Glide.with(itemView)
-                .load("https://image.tmdb.org/t/p/w500${data.poster}")
-                .transform(RoundedCorners(8))
-                .into(binding.ivPoster)
-
-            binding.tvDescFilm.text = data.overview
-            binding.tvTitleFilm.text = data.title
-
-            itemView.setOnClickListener {
-                onItemClicked.onMovieClicked(data)
-
-            }
+        val data = getItem(position)
+        if(data!=null){
+            holder.bind(data)
         }
-    }
-
-    override fun getItemCount(): Int {
-        return listDataFiltered.size
     }
 }

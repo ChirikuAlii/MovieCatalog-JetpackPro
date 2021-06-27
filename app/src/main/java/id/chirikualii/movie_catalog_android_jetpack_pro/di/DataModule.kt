@@ -7,9 +7,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import id.chirikualii.movie_catalog_android_jetpack_pro.data.local.LocalDataSource
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.local.MovieDb
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.local.dao.MovieDao
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.local.dao.TvShowDao
+import id.chirikualii.movie_catalog_android_jetpack_pro.data.remote.ApiService
+import id.chirikualii.movie_catalog_android_jetpack_pro.data.remote.RemoteDataSource
 import javax.inject.Singleton
 
 /**
@@ -41,5 +44,11 @@ object DataModule {
     @Provides
     fun provideTvShowDao(database: MovieDb): TvShowDao {
         return database.tvShowDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideLocaleDataSource(movieDao: MovieDao,tvShowDao: TvShowDao): LocalDataSource {
+        return LocalDataSource(movieDao, tvShowDao)
     }
 }
