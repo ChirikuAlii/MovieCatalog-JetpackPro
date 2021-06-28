@@ -3,7 +3,10 @@ package id.chirikualii.movie_catalog_android_jetpack_pro.ui.movies
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
+import id.chirikualii.movie_catalog_android_jetpack_pro.data.local.entity.MovieEntity
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.MovieRepo
+import id.chirikualii.movie_catalog_android_jetpack_pro.data.vo.Results
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.DataDummy
 import junit.framework.TestCase.assertEquals
@@ -13,6 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
@@ -25,7 +29,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class MoviesViewModelTest {
 
-    private val dummyMovies = DataDummy.getMovieList()
+
     private lateinit var mViewModel: MoviesViewModel
 
     @Mock
@@ -35,8 +39,10 @@ class MoviesViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var observer: Observer<ArrayList<Movie>>
+    private lateinit var observer: Observer<Results<PagedList<MovieEntity>>>
 
+    @Mock
+    private lateinit var moviesPagedList: PagedList<MovieEntity>
     @Before
     fun setUp() {
         mViewModel = (MoviesViewModel(repo))
@@ -44,21 +50,20 @@ class MoviesViewModelTest {
 
     @Test
     fun doGetDiscoverMovie() {
-        val movies = MutableLiveData<ArrayList<Movie>>()
-        val arrayList = arrayListOf<Movie>()
-        arrayList.addAll(dummyMovies)
-        movies.value = arrayList
+        val dummyMovies = Results.success(moviesPagedList)
+        `when`(dummyMovies.data?.size).thenReturn(10)
 
-        `when`(repo.getDiscoverMovieApi()).thenReturn(movies)
+        val movies = MutableLiveData<Results<PagedList<MovieEntity>>>()
+        movies.value = dummyMovies
 
-        val dataListMovie = mViewModel.doGetDiscoverMovieApi().value
-
-        verify(repo).getDiscoverMovieApi()
-        assertNotNull(dataListMovie)
-        assertEquals(10, dataListMovie?.size)
+        `when`(repo.getDiscoverMovie()).thenReturn(movies)
+        val movieEntity = mViewModel.doGetDiscoverMovieApi().value?.data
+        verify(repo).getDiscoverMovie()
+        assertNotNull(movieEntity)
+        assertEquals(10,movieEntity?.size)
 
         mViewModel.doGetDiscoverMovieApi().observeForever(observer)
-        verify(observer).onChanged(arrayList)
+        verify(observer).onChanged(dummyMovies)
 
     }
 }

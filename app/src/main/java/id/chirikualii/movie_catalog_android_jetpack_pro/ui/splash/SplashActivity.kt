@@ -15,6 +15,6 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-
+        finish()
     }
 }

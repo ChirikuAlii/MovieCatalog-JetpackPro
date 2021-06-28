@@ -9,19 +9,20 @@
 
     <TextView
         android:id="@+id/tvDesc"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:lineSpacingMultiplier="1.5"
-        tools:text="overview"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/ivPoster"
         app:layout_constraintTop_toBottomOf="@+id/ivPoster"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="overview" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -33,6 +34,7 @@
         android:layout_marginBottom="8dp"
         android:ellipsize="end"
         android:maxLines="3"
+        android:text=""
         tools:text="Title MovieTitle MovieTitle MovieTitle MovieTitle Movie"
         android:textColor="@color/black"
         android:textSize="18sp"
@@ -50,6 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
+        android:text=""
         tools:text="Release date : 2021-01-03"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/tvDesc"

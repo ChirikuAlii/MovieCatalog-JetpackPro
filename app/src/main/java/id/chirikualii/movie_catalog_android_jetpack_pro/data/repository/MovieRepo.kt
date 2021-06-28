@@ -30,35 +30,6 @@ class MovieRepo @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource) {
 
-    fun getDiscoverMovieApi(): LiveData<ArrayList<Movie>> {
-        val movies = MutableLiveData<ArrayList<Movie>>()
-        CoroutineScope(IO).launch {
-
-            remoteDataSource.discoverMovies(object : RemoteDataSource.LoadDiscoverMovieListener {
-                override fun onMoviesLoaded(movieResponse: List<DiscoverMovieResponse.MovieResponse>) {
-                    val moviesList = ArrayList<Movie>()
-                    movieResponse.map {
-                        Movie(
-                            id = it.id.toString(),
-                            title = it.title,
-                            overview = it.overview,
-                            poster = it.posterPath,
-                            backdrop = it.backdropPath.toString(),
-                            vote = it.voteAverage.toString(),
-                            releaseDate = it.releaseDate
-                        )
-                    }.forEach {
-                        moviesList.add(it)
-                    }
-                    movies.postValue(moviesList)
-                }
-
-            })
-        }
-
-        return movies
-    }
-
     fun getDiscoverMovie(): LiveData<Results<PagedList<MovieEntity>>>{
         return object: NetworkBoundResource<PagedList<MovieEntity> , List<DiscoverMovieResponse.MovieResponse>>(){
             override fun loadFromDB(): LiveData<PagedList<MovieEntity>> {

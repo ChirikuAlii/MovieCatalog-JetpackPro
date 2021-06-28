@@ -27,21 +27,21 @@ class DetailTvShowsActivity : AppCompatActivity() {
 
 
         mViewModel.doLoadDetailTvShow(tvShowId).observe(this, { data ->
-            binding.tvTitleTv.text = data.title
-            binding.tvDescTv.text = data.desc
-            binding.tvDateTv.text = data.releaseDate
+            binding.tvTitleTv.text = data?.title ?: ""
+            binding.tvDescTv.text = data?.desc ?: ""
+            binding.tvDateTv.text = data?.releaseDate ?: ""
 
             Glide.with(this)
-                .load("https://image.tmdb.org/t/p/w185${data.poster}")
+                .load("https://image.tmdb.org/t/p/w185${data?.poster ?: ""}")
                 .transform(RoundedCorners(8))
                 .into(binding.ivPosterTv)
 
             Glide.with(this)
-                .load("https://image.tmdb.org/t/p/w500${data.backdrop}")
+                .load("https://image.tmdb.org/t/p/w500${data?.backdrop ?: ""}")
                 .into(binding.ivBackdropTv)
 
 
-            when(data.isFavorite){
+            when(data?.isFavorite ?: 0){
                 0 -> {
                     binding.fabFavoriteTvShow.setImageResource(R.drawable.ic_favorite_white)
 
@@ -53,7 +53,7 @@ class DetailTvShowsActivity : AppCompatActivity() {
 
             binding.fabFavoriteTvShow.setOnClickListener {
 
-                when(data.isFavorite){
+                when(data?.isFavorite ?: 0){
                     0 -> {
                         toast("added to favorite")
                     }

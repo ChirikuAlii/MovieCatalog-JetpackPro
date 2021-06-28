@@ -26,35 +26,6 @@ class TvShowRepo @Inject constructor(
     private val localDataSource: LocalDataSource
     ) {
 
-    fun getDiscoverTvShowsApi(): LiveData<ArrayList<TvShow>> {
-        val tvShows = MutableLiveData<ArrayList<TvShow>>()
-        CoroutineScope(Dispatchers.IO).launch {
-
-            remoteDataSource.discoverTvShows(object : RemoteDataSource.LoadDiscoverTvShowListener {
-                override fun onTvShowsLoaded(tvShowResponse: List<DiscoverTvShowsResponse.TvShowsResponse>) {
-                    val tvShowList = ArrayList<TvShow>()
-                    tvShowResponse.map {
-                        TvShow(
-                            id = it.id.toString(),
-                            title = it.name,
-                            overview = it.overview,
-                            poster = it.posterPath,
-                            backdrop = it.backdropPath.toString(),
-                            vote = it.voteAverage.toString(),
-                            releaseDate = it.firstAirDate
-                        )
-                    }.forEach {
-                        tvShowList.add(it)
-                    }
-                    tvShows.postValue(tvShowList)
-                }
-
-            })
-        }
-
-        return tvShows
-    }
-
     fun getDiscoverTvShow(): LiveData<Results<PagedList<TvShowEntity>>>{
         return object: NetworkBoundResource<PagedList<TvShowEntity>, List<DiscoverTvShowsResponse.TvShowsResponse>>(){
             override fun loadFromDB(): LiveData<PagedList<TvShowEntity>> {

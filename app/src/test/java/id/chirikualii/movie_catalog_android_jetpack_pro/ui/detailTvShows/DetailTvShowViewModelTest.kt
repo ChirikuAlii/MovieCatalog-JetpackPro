@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
+import id.chirikualii.movie_catalog_android_jetpack_pro.data.local.entity.TvShowEntity
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.TvShowRepo
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.TvShow
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.DataDummy
@@ -15,6 +16,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
@@ -25,7 +27,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class DetailTvShowViewModelTest {
 
     private val dummyTvShow = DataDummy.getTvShows()[2]
-    private val tvShowId = dummyTvShow.id.toInt()
+    private val tvShowId = dummyTvShow.tvShowId.toInt()
 
     private lateinit var mViewModel: DetailTvShowViewModel
 
@@ -36,7 +38,7 @@ class DetailTvShowViewModelTest {
     private lateinit var repo: TvShowRepo
 
     @Mock
-    private lateinit var observer: Observer<TvShow>
+    private lateinit var observer: Observer<TvShowEntity>
 
     @Before
     fun setUp() {
@@ -46,21 +48,20 @@ class DetailTvShowViewModelTest {
 
     @Test
     fun testDoLoadDetailTvShow() {
-        val tvShowDummy = MutableLiveData<TvShow>()
+        val tvShowDummy = MutableLiveData<TvShowEntity>()
         tvShowDummy.value = dummyTvShow
 
-        Mockito.`when`(repo.getDetailTvShow(tvShowId)).thenReturn(tvShowDummy)
+        `when`(repo.getDetailTvShow(tvShowId)).thenReturn(tvShowDummy)
 
         val tvShow = mViewModel.doLoadDetailTvShow(tvShowId.toString()).value
 
         assertNotNull(tvShow)
-        assertEquals(dummyTvShow.id, tvShow?.id)
+        assertEquals(dummyTvShow.tvShowId, tvShow?.tvShowId)
         assertEquals(dummyTvShow.backdrop, tvShow?.backdrop)
-        assertEquals(dummyTvShow.overview, tvShow?.overview)
+        assertEquals(dummyTvShow.desc, tvShow?.desc)
         assertEquals(dummyTvShow.poster, tvShow?.poster)
         assertEquals(dummyTvShow.releaseDate, tvShow?.releaseDate)
         assertEquals(dummyTvShow.title, tvShow?.title)
-        assertEquals(dummyTvShow.vote, tvShow?.vote)
 
         mViewModel.doLoadDetailTvShow(tvShowId.toString()).observeForever(observer)
         verify(observer).onChanged(dummyTvShow)

@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
+import id.chirikualii.movie_catalog_android_jetpack_pro.data.local.entity.MovieEntity
 import id.chirikualii.movie_catalog_android_jetpack_pro.data.repository.MovieRepo
 import id.chirikualii.movie_catalog_android_jetpack_pro.model.Movie
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.DataDummy
@@ -25,7 +26,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class DetailMoviesViewModelTest {
 
     private val dummyMovie = DataDummy.getMovieList()[2]
-    private val movieId = dummyMovie.id.toInt()
+    private val movieId = dummyMovie.movieId.toInt()
 
     private lateinit var mViewModel: DetailMoviesViewModel
 
@@ -36,7 +37,7 @@ class DetailMoviesViewModelTest {
     private lateinit var repo: MovieRepo
 
     @Mock
-    private lateinit var observer: Observer<Movie>
+    private lateinit var observer: Observer<MovieEntity>
 
     @Before
     fun setUp() {
@@ -46,7 +47,7 @@ class DetailMoviesViewModelTest {
 
     @Test
     fun testDoLoadDetailMovie() {
-        val movieDummy = MutableLiveData<Movie>()
+        val movieDummy = MutableLiveData<MovieEntity>()
         movieDummy.value = dummyMovie
 
         `when`(repo.getDetailMovie(movieId)).thenReturn(movieDummy)
@@ -54,13 +55,13 @@ class DetailMoviesViewModelTest {
         val movie = mViewModel.doLoadDetailMovie(movieId.toString()).value
 
         assertNotNull(movie)
-        assertEquals(dummyMovie.id, movie?.id)
+        assertEquals(dummyMovie.movieId, movie?.movieId)
         assertEquals(dummyMovie.backdrop, movie?.backdrop)
-        assertEquals(dummyMovie.overview, movie?.overview)
+        assertEquals(dummyMovie.desc, movie?.desc)
         assertEquals(dummyMovie.poster, movie?.poster)
         assertEquals(dummyMovie.releaseDate, movie?.releaseDate)
         assertEquals(dummyMovie.title, movie?.title)
-        assertEquals(dummyMovie.vote, movie?.vote)
+
 
         mViewModel.doLoadDetailMovie(movieId.toString()).observeForever(observer)
         verify(observer).onChanged(dummyMovie)
