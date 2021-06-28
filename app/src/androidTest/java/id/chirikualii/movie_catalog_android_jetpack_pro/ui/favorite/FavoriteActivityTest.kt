@@ -1,11 +1,18 @@
 package id.chirikualii.movie_catalog_android_jetpack_pro.ui.favorite
 
 import android.content.Intent
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.pressBack
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.rule.ActivityTestRule
 import id.chirikualii.movie_catalog_android_jetpack_pro.R
 import id.chirikualii.movie_catalog_android_jetpack_pro.utils.EspressoIdlingResource
@@ -44,33 +51,33 @@ class FavoriteActivityTest {
 
     @Test
     fun swipePageFavorite() {
-        onView(ViewMatchers.withId(R.id.viewPagerFavorite))
-            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        onView(withId(R.id.viewPagerFavorite))
+            .check(matches(isDisplayed()))
 
-        onView(ViewMatchers.withId(R.id.viewPagerFavorite))
+        onView(withId(R.id.viewPagerFavorite))
             .perform(ViewActions.swipeLeft())
 
-        onView(ViewMatchers.withId(R.id.viewPagerFavorite))
+        onView(withId(R.id.viewPagerFavorite))
             .perform(ViewActions.swipeRight())
     }
 
     @Test
     fun loadMoviesFavorite() {
-        onView(ViewMatchers.withId(R.id.viewPagerFavorite))
-            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        onView(withId(R.id.viewPagerFavorite))
+            .check(matches(isDisplayed()))
 
-        onView(ViewMatchers.withId(R.id.recyclerViewMovieFavorite))
-            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        onView(withId(R.id.recyclerViewMovieFavorite))
+            .check(matches(isDisplayed()))
     }
 
     @Test
     fun loadTvShowFavorite() {
 
-        onView(ViewMatchers.withId(R.id.viewPagerFavorite))
+        onView(withId(R.id.viewPagerFavorite))
             .perform(ViewActions.swipeLeft())
 
-        onView(ViewMatchers.withId(R.id.recyclerViewTVShowFavorite))
-            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        onView(withId(R.id.recyclerViewTVShowFavorite))
+            .check(matches(isDisplayed()))
 
     }
 }

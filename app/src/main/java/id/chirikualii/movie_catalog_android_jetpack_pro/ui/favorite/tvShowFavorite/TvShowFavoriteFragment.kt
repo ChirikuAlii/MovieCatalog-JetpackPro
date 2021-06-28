@@ -43,7 +43,8 @@ class TvShowFavoriteFragment : Fragment(), OnItemClicked {
                     is TvShowsListAdapter -> {
                         if(data.isNullOrEmpty()){
                             binding.tvEmptyTvShowFavorite.visibility = View.VISIBLE
-
+                            adapter.submitList(data)
+                            adapter.notifyDataSetChanged()
                         }else{
                             binding.tvEmptyTvShowFavorite.visibility = View.INVISIBLE
                             adapter.submitList(data)

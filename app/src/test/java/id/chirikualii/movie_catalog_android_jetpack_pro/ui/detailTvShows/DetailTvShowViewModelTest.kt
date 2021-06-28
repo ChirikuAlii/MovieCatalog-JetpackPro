@@ -52,6 +52,7 @@ class DetailTvShowViewModelTest {
         tvShowDummy.value = dummyTvShow
 
         `when`(repo.getDetailTvShow(tvShowId)).thenReturn(tvShowDummy)
+        repo.getDetailTvShow(tvShowId)
 
         val tvShow = mViewModel.doLoadDetailTvShow(tvShowId.toString()).value
 

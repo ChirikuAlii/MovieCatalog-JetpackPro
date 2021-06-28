@@ -51,6 +51,7 @@ class DetailMoviesViewModelTest {
         movieDummy.value = dummyMovie
 
         `when`(repo.getDetailMovie(movieId)).thenReturn(movieDummy)
+        repo.getDetailMovie(movieId)
 
         val movie = mViewModel.doLoadDetailMovie(movieId.toString()).value
 

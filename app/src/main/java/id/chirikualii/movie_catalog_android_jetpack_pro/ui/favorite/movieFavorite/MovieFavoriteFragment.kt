@@ -48,7 +48,8 @@ class MovieFavoriteFragment : Fragment() , OnItemClicked{
                     is MoviesListAdapter -> {
                         if(data.isNullOrEmpty()){
                             binding.tvEmptyMovieFavorite.visibility = View.VISIBLE
-
+                            adapter.submitList(data)
+                            adapter.notifyDataSetChanged()
                         }else{
                             binding.tvEmptyMovieFavorite.visibility = View.INVISIBLE
                             adapter.submitList(data)

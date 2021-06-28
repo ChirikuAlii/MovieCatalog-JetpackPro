@@ -102,6 +102,9 @@ class MainActivityTest {
         onView(withId(R.id.tvDesc))
             .check(matches(isDisplayed()))
 
+        onView(withId(R.id.fabFavoriteMovie)).perform(ViewActions.click())
+        onView(withId(R.id.fabFavoriteMovie)).perform(ViewActions.click())
+
         Espresso.pressBack()
     }
 
@@ -127,6 +130,9 @@ class MainActivityTest {
             .check(matches(isDisplayed()))
         onView(withId(R.id.tvDescTv))
             .check(matches(isDisplayed()))
+
+        onView(withId(R.id.fabFavoriteTvShow)).perform(ViewActions.click())
+        onView(withId(R.id.fabFavoriteTvShow)).perform(ViewActions.click())
 
         Espresso.pressBack()
     }

@@ -47,7 +47,7 @@ class DetailMoviesActivity : AppCompatActivity() {
                 .load("https://image.tmdb.org/t/p/w500${data?.backdrop ?: ""}")
                 .into(binding.ivBackdrop)
 
-            when(data?.isFavorite ?:0){
+            when(data?.isFavorite){
                 0 -> {
                     binding.fabFavoriteMovie.setImageResource(R.drawable.ic_favorite_white)
 
